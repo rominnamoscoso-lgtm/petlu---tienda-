@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PETLÚ: tienda de accesorios y productos para consentir a tus mascotas.">
+  <title>PETLÚ | Amor para tus mascotas</title>
+  <style>
+    :root {
+      --cream: #fffaf2;
+      --pink: #f4d8d1;
+      --pink-dark: #d8877c;
+      --green: #55745c;
+      --green-dark: #344d3b;
+      --ink: #30382f;
+      --muted: #6f756d;
+      --white: #ffffff;
+      --line: #e9e4d9;
+      --shadow: 0 12px 35px rgba(48, 56, 47, .09);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .announcement {
+      padding: 9px 16px;
+      text-align: center;
+      color: white;
+      background: var(--green-dark);
+      font-size: .88rem;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px max(5%, calc((100% - 1160px) / 2));
+      background: rgba(255, 250, 242, .96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: var(--green-dark);
+    }
+    .logo span { color: var(--pink-dark); }
+    nav { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
+    nav a { font-size: .95rem; font-weight: 700; }
+    nav a:hover { color: var(--pink-dark); }
+    .cart-pill {
+      border: 0;
+      border-radius: 999px;
+      background: var(--pink);
+      color: var(--green-dark);
+      padding: 10px 15px;
+      font-weight: 800;
+    }
+    main { overflow: hidden; }
+    .hero {
+      max-width: 1160px;
+      margin: auto;
+      padding: 62px 5% 56px;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 35px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-block;
+      color: var(--green);
+      background: #e8eee5;
+      border-radius: 999px;
+      padding: 7px 13px;
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .5px;
+    }
+    h1 {
+      margin: 17px 0 14px;
+      max-width: 620px;
+      font-size: clamp(2.4rem, 5vw, 4.3rem);
+      line-height: 1.04;
+      letter-spacing: -1.8px;
+      color: var(--green-dark);
+    }
+    h1 span { color: var(--pink-dark); }
+    .hero p { max-width: 520px; color: var(--muted); font-size: 1.08rem; }
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 20px;
+      background: var(--green);
+      color: white;
+      font-weight: 800;
+      transition: transform .2s, background .2s;
+    }
+    .button:hover { transform: translateY(-2px); background: var(--green-dark); }
+    .button.secondary { color: var(--green-dark); background: var(--pink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 23px; }
+    .hero-art {
+      min-height: 335px;
+      border-radius: 42% 42% 28px 28px;
+      background: var(--pink);
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-art img { width: 100%; height: 100%; min-height: 335px; object-fit: cover; position: absolute; inset: 0; }
+    .hero-note {
+      z-index: 1;
+      align-self: end;
+      justify-self: start;
+      margin: 0 0 18px 18px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,.94);
+      border-radius: 18px;
+      font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+    section.content { padding: 58px 5%; }
+    .section-inner { max-width: 1160px; margin: auto; }
+    .section-heading { text-align: center; margin: 0 auto 30px; max-width: 680px; }
+    .section-heading h2 { color: var(--green-dark); font-size: clamp(1.8rem, 3vw, 2.6rem); margin: 0 0 8px; }
+    .section-heading p { color: var(--muted); margin: 0; }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .product {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+    .product-image { height: 220px; background: #f2ece1; overflow: hidden; }
+    .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s; }
+    .product:hover .product-image img { transform: scale(1.04); }
+    .product-body { padding: 19px; display: flex; flex-direction: column; flex: 1; }
+    .tag { color: var(--green); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .7px; }
+    .product h3 { margin: 7px 0 5px; color: var(--green-dark); font-size: 1.15rem; }
+    .product p { color: var(--muted); margin: 0 0 15px; font-size: .92rem; flex: 1; }
+    .product-bottom { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .price { font-size: 1.22rem; font-weight: 900; color: var(--green-dark); }
+    .add-button { border: 0; border-radius: 999px; padding: 10px 14px; background: var(--pink); color: var(--green-dark); font-weight: 800; }
+    .add-button:hover { background: #edc3ba; }
+    .cart-panel {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 5% 58px;
+    }
+    .cart-card, .payment-card, .contact-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 25px;
+      box-shadow: var(--shadow);
+    }
+    .cart-card h2, .payment-card h2, .contact-card h2 { margin: 0 0 12px; color: var(--green-dark); }
+    .cart-empty { color: var(--muted); }
+    .cart-items { list-style: none; padding: 0; margin: 0; }
+    .cart-items li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .cart-total { display: flex; justify-content: space-between; margin: 17px 0; font-size: 1.18rem; font-weight: 900; }
+    .cart-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .small-button { border: 0; border-radius: 999px; padding: 11px 16px; background: var(--green); color: white; font-weight: 800; }
+    .small-button.light { background: #e8eee5; color: var(--green-dark); }
+    .payment-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin-top: 20px; }
+    .payment-method {
+      padding: 17px 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      text-align: center;
+      background: #fffdf9;
+      font-weight: 900;
+    }
+    .payment-method span { display: block; margin-top: 5px; font-size: .8rem; font-weight: 500; color: var(--muted); }
+    .payment-note { font-size: .9rem; color: var(--muted); margin: 18px 0 0; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .contact-card p { color: var(--muted); }
+    .benefits { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 28px; }
+    .benefit { background: #f3f2e9; padding: 20px; border-radius: 18px; text-align: center; }
+    .benefit strong { display: block; color: var(--green-dark); margin-bottom: 5px; }
+    footer { padding: 27px 5%; background: var(--green-dark); color: white; text-align: center; }
+    footer p { margin: 4px 0; }
+    .toast {
+      position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%);
+      z-index: 20; background: var(--green-dark); color: white; padding: 12px 18px;
+      border-radius: 999px; box-shadow: var(--shadow); display: none; max-width: 90%;
+      text-align: center;
+    }
+    .toast.show { display: block; }
+    @media (max-width: 760px) {
+      header { padding: 13px 5%; flex-wrap: wrap; }
+      .logo { font-size: 1.55rem; }
+      nav { gap: 12px; }
+      nav a { font-size: .86rem; }
+      .hero { grid-template-columns: 1fr; padding-top: 42px; }
+      .hero-art { min-height: 260px; }
+      .hero-art img { min-height: 260px; }
+      .products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+      .product-image { height: 155px; }
+      .product-body { padding: 13px; }
+      .product-bottom { align-items: flex-start; flex-direction: column; }
+      .add-button { width: 100%; }
+      .payment-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .contact-grid, .benefits { grid-template-columns: 1fr; }
+      section.content { padding: 42px 5%; }
+      .cart-card, .payment-card, .contact-card { padding: 19px; }
+    }
+    @media (max-width: 380px) {
+      .products { grid-template-columns: 1fr; }
+      .product-image { height: 220px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="announcement">🐾 ¡Todo el amor para tus mascotas, en un solo lugar!</div>
+  <header>
+    <a class="logo" href="#inicio" aria-label="PETLÚ inicio">PETLÚ<span>♥</span></a>
+    <nav aria-label="Navegación principal">
+      <a href="#inicio">Inicio</a>
+      <a href="#productos">Productos</a>
+      <a href="#pagos">Pagos</a>
+      <a href="#contacto">Contacto</a>
+      <button class="cart-pill" onclick="irAlCarrito()">🛒 Carrito (<span id="cart-count">0</span>)</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div>
+        <span class="eyebrow">PARA QUIENES SON FAMILIA</span>
+        <h1>Pequeños detalles, <span>grandes momentos.</span></h1>
+        <p>Encuentra accesorios y productos para consentir a tus compañeros de cuatro patas. En PETLÚ, cada colita feliz importa.</p>
+        <div class="hero-actions">
+          <a class="button" href="#productos">Ver productos 🐾</a>
+          <a class="button secondary" href="#contacto">Contáctanos</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <img src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&w=1000&q=85" alt="Perro feliz en un espacio al aire libre" onerror="this.style.display='none'">
+        <div class="hero-note">Más amor, más huellitas ♡</div>
+      </div>
+    </section>
+
+    <section class="content" id="productos">
+      <div class="section-inner">
+        <div class="section-heading">
+          <span class="eyebrow">NUESTROS FAVORITOS</span>
+          <h2>Un mimo para cada mascota</h2>
+          <p>Explora nuestros productos y agrega tus favoritos al carrito.</p>
+        </div>
+        <div class="products" id="product-list">
+          <article class="product">
+            <div class="product-image"><img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=700&q=80" alt="Snacks para mascotas" loading="lazy" onerror="this.src='https://placehold.co/600x400/f4d8d1/344d3b?text=Snacks+para+mascotas'"></div>
+            <div class="product-body">
+              <span class="tag">Premios</span><h3>Snacks para mascotas</h3>
+              <p>Un premio especial para consentir a tu compañero.</p>
+              <div class="product-bottom"><span class="price">S/ 15.00</span><button class="add-button" onclick="agregarAlCarrito('Snacks para mascotas',15)">Agregar +</button></div>
+            </div>
+          </article>
+          <article class="product">
+            <div class="product-image"><img src="https://images.unsplash.com/photo-1601758123927-196d5f3d5f8b?auto=format&fit=crop&w=700&q=80" alt="Juguete para perro" loading="lazy" onerror="this.src='https://placehold.co/600x400/e8eee5/344d3b?text=Juguete+para+mascota'"></div>
+            <div class="product-body">
+              <span class="tag">Diversión</span><h3>Juguete para mascota</h3>
+              <p>Para jugar, moverse y compartir momentos felices.</p>
+              <div class="product-bottom"><span class="price">S/ 20.00</span><button class="add-button" onclick="agregarAlCarrito('Juguete para mascota',20)">Agregar +</button></div>
+            </div>
+          </article>
+          <article class="product">
+            <div class="product-image"><img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=700&q=80" alt="Accesorio para alimentación de mascotas" loading="lazy" onerror="this.src='https://placehold.co/600x400/f4d8d1/344d3b?text=Plato+para+mascotas'"></div>
+            <div class="product-body">
+              <span class="tag">Accesorios</span><h3>Plato para mascotas</h3>
+              <p>Un accesorio práctico para su comida diaria.</p>
+              <div class="product-bottom"><span class="price">S/ 25.00</span><button class="add-button" onclick="agregarAlCarrito('Plato para mascotas',25)">Agregar +</button></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cart-panel" id="carrito">
+      <div class="cart-card">
+        <h2>🛒 Tu carrito</h2>
+        <p class="cart-empty" id="cart-empty">Todavía no agregaste productos. ¡Elige tus favoritos!</p>
+        <ul class="cart-items" id="cart-items"></ul>
+        <div class="cart-total"><span>Total estimado</span><span id="cart-total">S/ 0.00</span></div>
+        <div class="cart-actions">
+          <button class="small-button" onclick="consultarPorWhatsApp()">Consultar pedido por WhatsApp</button>
+          <button class="small-button light" onclick="vaciarCarrito()">Vaciar carrito</button>
+        </div>
+        <p class="payment-note">El pedido se enviará como consulta. La compra se confirma después de coordinar disponibilidad, envío y pago.</p>
+      </div>
+    </section>
+
+    <section class="content" id="pagos">
+      <div class="section-inner">
+        <div class="section-heading">
+          <span class="eyebrow">COMPRA CON TRANQUILIDAD</span>
+          <h2>Medios de pago</h2>
+          <p>Selecciona el medio de pago que prefieras al coordinar tu pedido.</p>
+        </div>
+        <div class="payment-card">
+          <div class="payment-grid">
+            <div class="payment-method">Yape<span>Pago por coordinación</span></div>
+            <div class="payment-method">Plin<span>Pago por coordinación</span></div>
+            <div class="payment-method">VISA<span>Por configurar</span></div>
+            <div class="payment-method">Culqi<span>Por configurar</span></div>
+          </div>
+          <p class="payment-note">Importante: estos medios se muestran como opciones informativas. Para recibir pagos reales, configura tus cuentas o integra una pasarela de pago segura. Nunca compartas tu clave ni códigos de seguridad.</p>
+        </div>
+        <div class="benefits">
+          <div class="benefit"><strong>🐶 Para perros</strong>Accesorios y diversión.</div>
+          <div class="benefit"><strong>🐱 Para gatos</strong>Detalles para consentirlos.</div>
+          <div class="benefit"><strong>💚 Atención cercana</strong>Consultas antes de comprar.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content" id="contacto">
+      <div class="section-inner">
+        <div class="section-heading">
+          <span class="eyebrow">ESTAMOS PARA AYUDARTE</span>
+          <h2>Hablemos de tu pedido</h2>
+          <p>¿Tienes dudas sobre un producto? Escríbenos.</p>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h2>💌 Atención PETLÚ</h2>
+            <p>Consulta precios, disponibilidad y opciones de entrega. Te ayudaremos a elegir lo mejor para tu mascota.</p>
+            <button class="button" onclick="consultarPorWhatsApp()">Consultar por WhatsApp</button>
+          </div>
+          <div class="contact-card">
+            <h2>🐾 Nuestra idea</h2>
+            <p>PETLÚ nace para reunir productos prácticos y bonitos para las mascotas, con una experiencia sencilla desde el celular.</p>
+            <p><strong>Horario:</strong> Atención por coordinación.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>PETLÚ</strong> — Amor para tus mascotas ♥</p>
+    <p>Proyecto académico de tienda virtual.</p>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const carrito = [];
+    function formatoSoles(valor) {
+      return "S/ " + valor.toFixed(2);
+    }
+    function mostrarAviso(mensaje) {
+      const aviso = document.getElementById("toast");
+      aviso.textContent = mensaje;
+      aviso.classList.add("show");
+      window.clearTimeout(mostrarAviso.temporizador);
+      mostrarAviso.temporizador = window.setTimeout(() => aviso.classList.remove("show"), 2600);
+    }
+    function agregarAlCarrito(nombre, precio) {
+      carrito.push({ nombre, precio });
+      actualizarCarrito();
+      mostrarAviso(nombre + " se agregó al carrito.");
+    }
+    function actualizarCarrito() {
+      const lista = document.getElementById("cart-items");
+      const vacio = document.getElementById("cart-empty");
+      lista.innerHTML = "";
+      vacio.style.display = carrito.length ? "none" : "block";
+      carrito.forEach((producto, indice) => {
+        const elemento = document.createElement("li");
+        const nombre = document.createElement("span");
+        nombre.textContent = producto.nombre;
+        const precio = document.createElement("strong");
+        precio.textContent = formatoSoles(producto.precio);
+        const quitar = document.createElement("button");
+        quitar.type = "button";
+        quitar.textContent = "Quitar";
+        quitar.className = "small-button light";
+        quitar.style.padding = "5px 10px";
+        quitar.onclick = () => { carrito.splice(indice, 1); actualizarCarrito(); };
+        const lado = document.createElement("span");
+        lado.style.display = "flex";
+        lado.style.alignItems = "center";
+        lado.style.gap = "10px";
+        lado.append(precio, quitar);
+        elemento.append(nombre, lado);
+        lista.appendChild(elemento);
+      });
+      document.getElementById("cart-count").textContent = carrito.length;
+      const total = carrito.reduce((suma, producto) => suma + producto.precio, 0);
+      document.getElementById("cart-total").textContent = formatoSoles(total);
+    }
+    function irAlCarrito() {
+      document.getElementById("carrito").scrollIntoView({ behavior: "smooth" });
+    }
+    function vaciarCarrito() {
+      carrito.length = 0;
+      actualizarCarrito();
+      mostrarAviso("Tu carrito está vacío.");
+    }
+    function consultarPorWhatsApp() {
+      const telefono = ""; // Escribe aquí tu número con código de país, solo números. Ejemplo Perú: 51987654321
+      if (!telefono) {
+        mostrarAviso("Para activar WhatsApp, agrega tu número en el código.");
+        return;
+      }
+      const lineas = carrito.length
+        ? carrito.map(p => "- " + p.nombre + ": " + formatoSoles(p.precio)).join("\n")
+        : "Hola, quisiera información sobre los productos de PETLÚ.";
+      const total = carrito.reduce((suma, producto) => suma + producto.precio, 0);
+      const mensaje = "Hola, PETLÚ. Quisiera consultar este pedido:\n" + lineas + "\nTotal estimado: " + formatoSoles(total);
+      window.open("https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje), "_blank", "noopener");
+    }
+  </script>
+</body>
+</html>
