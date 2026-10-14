@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PETLÚ | Amor para tus mascotas</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fffaf5;
+      color: #39312e;
+    }
+    header {
+      background: #f6d9c8;
+      padding: 22px 16px;
+      text-align: center;
+    }
+    header h1 { margin: 0; color: #704737; font-size: 36px; }
+    header p { margin-bottom: 0; }
+    nav {
+      background: #704737;
+      padding: 13px;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 12px;
+      font-weight: bold;
+    }
+    .hero {
+      text-align: center;
+      padding: 45px 18px;
+      background: #fff0e5;
+    }
+    .hero h2 { font-size: 30px; color: #704737; }
+    .hero button, .product button {
+      background: #e78c69;
+      color: white;
+      border: 0;
+      padding: 12px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .products { padding: 25px 18px; text-align: center; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 18px;
+      max-width: 900px;
+      margin: 25px auto;
+    }
+    .product {
+      background: white;
+      padding: 22px 14px;
+      border-radius: 15px;
+      box-shadow: 0 3px 12px #00000012;
+    }
+    .emoji { font-size: 52px; }
+    .price { color: #a35c40; font-weight: bold; }
+    #cart {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      max-width: 500px;
+      margin: 20px auto;
+    }
+    footer {
+      background: #704737;
+      color: white;
+      text-align: center;
+      padding: 22px;
+    }
+    @media(max-width: 480px) {
+      nav a { margin: 0 6px; font-size: 14px; }
+      .hero h2 { font-size: 25px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🐾 PETLÚ</h1>
+    <p>Amor, cuidado y felicidad para tus mascotas</p>
+  </header>
+
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#productos">Productos</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <section class="hero" id="inicio">
+    <h2>¡Ellos merecen lo mejor!</h2>
+    <p>Encuentra productos para consentir a tu mejor amigo.</p>
+    <button onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">
+      Ver productos
+    </button>
+  </section>
+
+  <section class="products" id="productos">
+    <h2>Nuestros productos 🐶🐱</h2>
+    <p>Descubre opciones para el cuidado de tu mascota.</p>
+    <div class="grid">
+      <article class="product">
+        <div class="emoji">🦴</div>
+        <h3>Snacks para mascotas</h3>
+        <p>Premios para consentirlos.</p>
+        <p class="price">S/ 15.00</p>
+        <button onclick="agregar('Snacks para mascotas',15)">Agregar</button>
+      </article>
+      <article class="product">
+        <div class="emoji">🧸</div>
+        <h3>Juguete divertido</h3>
+        <p>Para jugar y compartir.</p>
+        <p class="price">S/ 20.00</p>
+        <button onclick="agregar('Juguete divertido',20)">Agregar</button>
+      </article>
+      <article class="product">
+        <div class="emoji">🥣</div>
+        <h3>Plato para mascotas</h3>
+        <p>Práctico para su alimentación.</p>
+        <p class="price">S/ 25.00</p>
+        <button onclick="agregar('Plato para mascotas',25)">Agregar</button>
+      </article>
+    </div>
+
+    <div id="cart">
+      <h3>🛒 Tu carrito</h3>
+      <p id="items">Aún no has agregado productos.</p>
+      <p>Total: <strong id="total">S/ 0.00</strong></p>
+      <button onclick="enviarPedido()">Consultar pedido por WhatsApp</button>
+    </div>
+  </section>
+
+  <footer id="contacto">
+    <h3>🐾 PETLÚ</h3>
+    <p>Porque su felicidad también es la nuestra.</p>
+    <p>Contáctanos para conocer más sobre nuestros productos.</p>
+  </footer>
+
+  <script>
+    let carrito = [];
+    function agregar(nombre, precio) {
+      carrito.push({nombre, precio});
+      document.getElementById('items').textContent =
+        carrito.map(p => p.nombre).join(', ');
+      const total = carrito.reduce((suma, p) => suma + p.precio, 0);
+      document.getElementById('total').textContent =
+        'S/ ' + total.toFixed(2);
+    }
+    function enviarPedido() {
+      if (!carrito.length) {
+        alert('Primero agrega un producto a tu carrito.');
+        return;
+      }
+      alert('Tu pedido está listo para consultar. Falta configurar el número de WhatsApp de PETLÚ para enviar el mensaje.');
+    }
+  </script>
+</body>
+</html>
